@@ -138,6 +138,14 @@ Use **`/speckit.implement`** to execute all tasks and build your feature accordi
 /speckit.implement
 ```
 
+### 7. Verify end-to-end
+
+Use **`/speckit.verify`** to validate the complete implementation against every user story in the spec. It runs existing test suites, performs automated E2E checks (API calls, UI via Playwright MCP, CLI, file inspection), and lists any remaining manual verification tasks.
+
+```bash
+/speckit.verify
+```
+
 For detailed step-by-step instructions, see our [comprehensive guide](./spec-driven.md).
 
 ## 📽️ Video Overview
@@ -300,6 +308,7 @@ Essential commands for the Spec-Driven Development workflow:
 | `/speckit.plan`         | Create technical implementation plans with your chosen tech stack        |
 | `/speckit.tasks`        | Generate actionable task lists for implementation                        |
 | `/speckit.implement`    | Execute all tasks to build the feature according to the plan             |
+| `/speckit.verify`       | Validate the full implementation end-to-end against every user story; runs test suites, automated E2E checks, and produces a manual tasks list |
 
 #### Optional Commands
 
@@ -310,6 +319,7 @@ Additional commands for enhanced quality and validation:
 | `/speckit.clarify`   | Clarify underspecified areas (recommended before `/speckit.plan`; formerly `/quizme`)                                                |
 | `/speckit.analyze`   | Cross-artifact consistency & coverage analysis (run after `/speckit.tasks`, before `/speckit.implement`)                             |
 | `/speckit.checklist` | Generate custom quality checklists that validate requirements completeness, clarity, and consistency (like "unit tests for English") |
+| `/speckit.taskstoissues` | Convert tasks from `tasks.md` into GitHub issues for project tracking                                                           |
 
 ### Environment Variables
 
@@ -655,6 +665,23 @@ The `/speckit.implement` command will:
 > The AI agent will execute local CLI commands (such as `dotnet`, `npm`, etc.) - make sure you have the required tools installed on your machine.
 
 Once the implementation is complete, test the application and resolve any runtime errors that may not be visible in CLI logs (e.g., browser console errors). You can copy and paste such errors back to your AI agent for resolution.
+
+### **STEP 8:** Verify end-to-end
+
+With the implementation complete, use the **`/speckit.verify`** command to confirm that every user story in the spec is actually working:
+
+```text
+/speckit.verify
+```
+
+The `/speckit.verify` command will:
+
+- Read `spec.md` and derive a verification checklist from every user story and acceptance criterion
+- Detect the local runtime environment (checking project config files such as `package.json`, `docker-compose.yml`, `Makefile`, etc., before falling back to analysing the tech stack)
+- Run all existing test suites (unit, integration, etc.) and report results
+- Perform automated E2E verification: API endpoint calls, UI interaction via Playwright MCP, CLI execution, and file inspection
+- Produce a results table showing pass/fail per check
+- List any items that could not be automated as **manual verification tasks** for the developer
 
 </details>
 

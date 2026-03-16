@@ -5,7 +5,7 @@ This guide will help you get started with Spec-Driven Development using Spec Kit
 > [!NOTE]
 > All automation scripts now provide both Bash (`.sh`) and PowerShell (`.ps1`) variants. The `specify` CLI auto-selects based on OS unless you pass `--script sh|ps`.
 
-## The 6-Step Process
+## The 7-Step Process
 
 > [!TIP]
 > **Context Awareness**: Spec Kit commands automatically detect the active feature based on your current Git branch (e.g., `001-feature-name`). To switch between different specifications, simply switch Git branches.
@@ -84,6 +84,21 @@ Then, use the `/speckit.implement` slash command to execute the plan.
 > [!TIP]
 > **Phased Implementation**: For complex projects, implement in phases to avoid overwhelming the agent's context. Start with core functionality, validate it works, then add features incrementally.
 
+### Step 7: Verify End-to-End
+
+**In the chat**, use the `/speckit.verify` slash command to validate the complete implementation against every user story in the spec.
+
+The command will:
+- Derive a verification checklist from every user story and acceptance criterion in `spec.md`
+- Auto-detect the local runtime environment (checking project config files first)
+- Run all existing test suites and report results
+- Execute automated E2E checks: API calls, UI interaction via Playwright MCP, CLI execution, file inspection
+- List any items that cannot be automated as manual verification tasks
+
+```markdown
+/speckit.verify
+```
+
 ## Detailed Example: Building Taskify
 
 Here's a complete example of building a team productivity platform:
@@ -158,6 +173,14 @@ Finally, implement the solution:
 
 ```bash
 /speckit.implement
+```
+
+### Step 8: Verify End-to-End
+
+With the implementation complete, validate every user story against the spec:
+
+```bash
+/speckit.verify
 ```
 
 > [!TIP]

@@ -102,6 +102,17 @@ After a plan is created, this command analyzes the plan and related design docum
 3. **Parallelization**: Marks independent tasks `[P]` and outlines safe parallel groups
 4. **Output**: Writes `tasks.md` in the feature directory, ready for execution by a Task agent
 
+### The `/speckit.verify` Command
+
+After implementation, this command closes the loop by validating the running system against the original specification:
+
+1. **Spec-driven checklist**: Parses every user story and acceptance criterion from `spec.md` and generates a concrete verification checklist
+2. **Environment detection**: Discovers the local runtime from project config files (`package.json`, `docker-compose.yml`, `Makefile`, framework config files, etc.) before falling back to plan.md or source analysis
+3. **Existing test suites**: Runs all detected test runners (jest, pytest, go test, etc.) and reports results — a complement to, not a replacement for, E2E verification
+4. **Automated E2E verification**: Calls API endpoints, interacts with the UI via Playwright MCP, executes CLI commands, and inspects generated files — covering every `auto:*` item
+5. **Manual tasks list**: Collects only the checks that genuinely require human action (e.g. real payment flows, hardware peripherals) and presents them as a developer checklist
+6. **Final report**: Produces an overall COMPLETE / PARTIAL / INCOMPLETE verdict with actionable next steps
+
 ### Example: Building a Chat Feature
 
 Here's how these commands transform the traditional development workflow:
@@ -141,15 +152,20 @@ Total: ~12 hours of documentation work
 # - specs/003-chat-system/contracts/ (WebSocket events, REST endpoints)
 # - specs/003-chat-system/quickstart.md (Key validation scenarios)
 # - specs/003-chat-system/tasks.md (Task list derived from the plan)
+
+# Step 4: Implement and verify (minutes to hours depending on project size)
+/speckit.implement
+/speckit.verify
 ```
 
-In 15 minutes, you have:
+In 15–20 minutes of automated work, you have:
 
 - A complete feature specification with user stories and acceptance criteria
 - A detailed implementation plan with technology choices and rationale
 - API contracts and data models ready for code generation
 - Comprehensive test scenarios for both automated and manual testing
 - All documents properly versioned in a feature branch
+- A verified, working implementation with a clear list of any remaining manual checks
 
 ### The Power of Structured Automation
 
